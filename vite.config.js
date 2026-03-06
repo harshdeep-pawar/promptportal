@@ -6,5 +6,5 @@ export default defineConfig({
   plugins: [react()],
   // GitHub Pages project site base path.
   // If you publish under a different repo name, change this to "/<repo-name>/".
-  base: '/prompt-engineering-portal/',
+  base: "/promptportal/",
 })

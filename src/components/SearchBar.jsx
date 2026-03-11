@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function SearchBar({ value, onChange }) {
   const inputRef = useRef(null)
+  const [isFocused, setIsFocused] = useState(false)
 
   useEffect(() => {
     const onKeyDown = (e) => {
@@ -13,6 +14,11 @@ export default function SearchBar({ value, onChange }) {
           inputRef.current?.focus()
         }
       }
+      
+      // Close on Escape
+      if (e.key === 'Escape') {
+        inputRef.current?.blur()
+      }
     }
 
     window.addEventListener('keydown', onKeyDown)
@@ -20,14 +26,18 @@ export default function SearchBar({ value, onChange }) {
   }, [])
 
   return (
-    <div className="searchWrap">
+    <div className={`searchWrap ${isFocused ? 'focused' : ''}`}>
       <input
         ref={inputRef}
         className="searchInput"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="Search topics & prompts…"
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        placeholder="Search…"
         aria-label="Search topics and prompts"
+        type="search"
+        autoComplete="off"
       />
       <span className="kbd" aria-hidden="true">
         /
@@ -35,4 +45,5 @@ export default function SearchBar({ value, onChange }) {
     </div>
   )
 }
+
 

@@ -260,7 +260,7 @@ export default function Examples({ searchQuery }) {
   )
 
   return (
-    <div>
+    <div id="examples">
       <h1 style={{ marginTop: 0 }}>Examples</h1>
       <p className="muted">
         Copy reusable prompt templates. Use search to filter by topic (e.g.

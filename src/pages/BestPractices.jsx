@@ -23,7 +23,7 @@ const tips = [
 
 export default function BestPractices() {
   return (
-    <div>
+    <div id="best-practices">
       <h1 style={{ marginTop: 0 }}>Best Practices</h1>
       <p className="muted">
         Strong prompts look like good requirements: clear goal, clear context,

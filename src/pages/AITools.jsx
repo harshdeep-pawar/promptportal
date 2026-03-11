@@ -43,7 +43,7 @@ const tools = [
 
 export default function AITools() {
   return (
-    <div>
+    <div id="ai-tools">
       <h1 style={{ marginTop: 0 }}>Popular AI Tools for Prompt Engineering</h1>
       <p className="muted">
         These tools show up across the prompt engineering workflow—from exploring ideas and writing

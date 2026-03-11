@@ -1,6 +1,6 @@
 export default function PromptTypes() {
   return (
-    <div>
+    <div id="prompt-types">
       <h1 style={{ marginTop: 0 }}>Prompt Types</h1>
       <p className="muted">
         Different prompting patterns help you control quality and consistency.

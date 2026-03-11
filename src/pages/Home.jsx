@@ -38,7 +38,7 @@ export default function Home({ searchQuery }) {
   )
 
   return (
-    <div>
+    <div id="home">
       <section className="hero">
         <h1 className="heroTitle">Learn Prompt Engineering</h1>
         <p className="heroSubtitle">

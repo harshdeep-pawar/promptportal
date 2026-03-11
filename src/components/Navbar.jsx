@@ -1,7 +1,9 @@
-import { NavLink } from 'react-router-dom'
+import { useEffect, useState, useRef } from 'react'
+import { NavLink, useLocation } from 'react-router-dom'
 import DarkModeToggle from './DarkModeToggle.jsx'
 import SearchBar from './SearchBar.jsx'
 import logoUrl from '/prompt-logo.png'
+import { NAV_ITEMS, useScrollSpy, smoothScroll } from '../hooks/useNavigation.js'
 
 const linkClass = ({ isActive }) =>
   `navLink ${isActive ? 'navLinkActive' : ''}`
@@ -13,20 +15,34 @@ export default function Navbar({
   setSearchQuery,
   onOpenMobileSidebar,
 }) {
+  const location = useLocation()
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
+  const activeId = useScrollSpy()
+
+  const handleNavClick = (path, id) => {
+    setMobileNavOpen(false)
+    
+    // If on same page, smooth scroll to section
+    if (window.location.pathname === path) {
+      smoothScroll(id)
+    }
+  }
+
   return (
     <header className="topbar">
       <div className="topbarInner">
         <button
           type="button"
-          className="iconBtn mobileOnly"
-          onClick={onOpenMobileSidebar}
-          aria-label="Open sidebar"
+          className={`iconBtn mobileOnly hamburger ${mobileNavOpen ? 'active' : ''}`}
+          onClick={() => setMobileNavOpen(!mobileNavOpen)}
+          aria-label="Toggle navigation menu"
+          aria-expanded={mobileNavOpen}
           title="Menu"
         >
           <svg
             aria-hidden="true"
-            width="18"
-            height="18"
+            width="20"
+            height="20"
             viewBox="0 0 24 24"
             fill="none"
           >
@@ -53,25 +69,23 @@ export default function Navbar({
           <span>PromptPortal</span>
         </NavLink>
 
-        <nav className="navLinks" aria-label="Top navigation">
-          <NavLink to="/" className={linkClass} end>
-            Home
-          </NavLink>
-          <NavLink to="/introduction" className={linkClass}>
-            Introduction
-          </NavLink>
-          <NavLink to="/prompt-types" className={linkClass}>
-            Prompt Types
-          </NavLink>
-          <NavLink to="/examples" className={linkClass}>
-            Examples
-          </NavLink>
-          <NavLink to="/best-practices" className={linkClass}>
-            Best Practices
-          </NavLink>
-          <NavLink to="/ai-tools" className={linkClass}>
-            AI Tools
-          </NavLink>
+        <nav
+          className={`navLinks ${mobileNavOpen ? 'navLinksOpen' : ''}`}
+          aria-label="Top navigation"
+        >
+          {NAV_ITEMS.map((item) => (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              className={({ isActive }) =>
+                `navLink ${isActive || activeId === item.id ? 'navLinkActive' : ''}`
+              }
+              end={item.path === '/'}
+              onClick={() => handleNavClick(item.path, item.id)}
+            >
+              {item.label}
+            </NavLink>
+          ))}
         </nav>
 
         <div className="grow" />
@@ -79,6 +93,14 @@ export default function Navbar({
         <SearchBar value={searchQuery} onChange={setSearchQuery} />
         <DarkModeToggle theme={theme} onToggle={onToggleTheme} />
       </div>
+
+      {mobileNavOpen && (
+        <div
+          className="navOverlay"
+          onClick={() => setMobileNavOpen(false)}
+          aria-hidden="true"
+        />
+      )}
     </header>
   )
 }

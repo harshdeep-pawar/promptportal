@@ -42,7 +42,7 @@ export default function PromptCard({ title, prompt, tone = 'neutral' }) {
         <div className="copyRow">
           {copied ? <div className="toast">Copied</div> : null}
           <button type="button" className="btn" onClick={onCopy}>
-            Copy Prompt
+            {copied ? 'Copied' : 'Copy Prompt'}
           </button>
         </div>
       </div>

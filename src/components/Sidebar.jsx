@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom'
 
 const topics = [
+  { to: '/', label: 'Home', badge: 'Start' },
   { to: '/introduction', label: 'Introduction', badge: 'Basics' },
   { to: '/prompt-types', label: 'Prompt Types', badge: 'Patterns' },
   { to: '/examples', label: 'Examples', badge: 'Cards' },
